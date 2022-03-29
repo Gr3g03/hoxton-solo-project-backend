@@ -32,12 +32,12 @@ async function getUserFromToken(token: string) {
 
 
 app.post('/signup', async (req, res) => {
-    const { firstName, lastName, email, password, photo, phone_number } = req.body
+    const { firstName, lastName, email, password, photo, phone_number, dateCreated } = req.body
 
     try {
         const hash = bcrypt.hashSync(password, 8)
         const user = await prisma.user.create({
-            data: { firstName: firstName, lastName: lastName, email: email, password: hash, photo: photo, phone_number: phone_number }
+            data: { firstName: firstName, lastName: lastName, email: email, password: hash, photo: photo, phone_number: phone_number, dateCreated: dateCreated }
         })
         res.send({ user, token: createToken(user.id) })
     }

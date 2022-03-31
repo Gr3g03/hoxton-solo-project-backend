@@ -6,8 +6,15 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "photo" TEXT NOT NULL,
-    "dateCreated" DATETIME NOT NULL,
+    "dateCreated" TEXT NOT NULL,
     "phone_number" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Owner" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -18,7 +25,6 @@ CREATE TABLE "Rooms" (
     "total_occupancy" INTEGER NOT NULL,
     "total_bedrooms" INTEGER NOT NULL,
     "total_bathrooms" INTEGER NOT NULL,
-    "summary" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "has_tv" INTEGER NOT NULL,
     "has_kitchen" INTEGER NOT NULL,
@@ -26,25 +32,25 @@ CREATE TABLE "Rooms" (
     "has_heating" INTEGER NOT NULL,
     "has_Internet" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "published_at" DATETIME NOT NULL,
-    "owner_id" INTEGER NOT NULL,
-    "created_at" DATETIME NOT NULL,
-    "updated_at" DATETIME NOT NULL,
+    "photo" TEXT NOT NULL,
+    "published_at" TEXT NOT NULL,
+    "created_at" TEXT NOT NULL,
+    "stars" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "Rooms_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "ownerId" INTEGER NOT NULL,
+    CONSTRAINT "Rooms_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Rooms_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Owner" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "Reservations" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "user_id" INTEGER NOT NULL,
-    "room_id" INTEGER NOT NULL,
-    "start_date" DATETIME NOT NULL,
-    "end_date" DATETIME NOT NULL,
+    "start_date" TEXT NOT NULL,
+    "end_date" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "total" INTEGER NOT NULL,
-    "created_at" DATETIME NOT NULL,
-    "updated_at" DATETIME NOT NULL,
+    "created_at" TEXT NOT NULL,
+    "updated_at" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "roomId" INTEGER NOT NULL,
     CONSTRAINT "Reservations_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -54,7 +60,6 @@ CREATE TABLE "Reservations" (
 -- CreateTable
 CREATE TABLE "Reviews" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "reservation_id" INTEGER NOT NULL,
     "rating" INTEGER NOT NULL,
     "comment" TEXT NOT NULL,
     "roomId" INTEGER NOT NULL,

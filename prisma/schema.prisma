@@ -24,6 +24,13 @@ model User {
   reviews      Reviews[]
 }
 
+model Owner {
+  id        Int     @id @default(autoincrement())
+  firstName String
+  lastName  String
+  rooms     Rooms[]
+}
+
 model Rooms {
   id              Int            @id @default(autoincrement())
   home_type       String
@@ -41,8 +48,11 @@ model Rooms {
   photo           String
   published_at    String
   created_at      String
+  stars           Int
   user            User           @relation(fields: [userId], references: [id])
   userId          Int
+  owner           Owner          @relation(fields: [userId], references: [id])
+  ownerId         Int
   reservations    Reservations[]
   reviews         Reviews[]
 }

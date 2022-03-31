@@ -71,6 +71,30 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.get('/rooms', async (req, res) => {
+    const rooms = await prisma.rooms.findMany({ include: { reviews: true } })
+    res.send(rooms)
+})
+
+app.get('/rooms/:id', async (req, res) => {
+    const id = Number(req.params.id)
+    try {
+        const room = await prisma.rooms.findFirst({
+            where: { id },
+            include: { reviews: true }
+        })
+        if (room) {
+            res.send(room)
+        } else {
+            res.status(404).send({ error: 'room not found' })
+        }
+    }
+    catch (error) {
+        //@ts-ignore
+        res.status(400).send({ error: 'room not found' })
+    }
+})
+
 app.get('/validate', async (req, res) => {
     const token = req.headers.authorization || ' '
 

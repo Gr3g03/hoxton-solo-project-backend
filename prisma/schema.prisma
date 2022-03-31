@@ -38,6 +38,7 @@ model Rooms {
   has_heating     Int
   has_Internet    Int
   price           Int
+  photo           String
   published_at    String
   created_at      String
   user            User           @relation(fields: [userId], references: [id])

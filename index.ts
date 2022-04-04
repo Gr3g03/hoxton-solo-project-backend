@@ -109,6 +109,22 @@ app.get('/validate', async (req, res) => {
 })
 
 
+app.post('/reservations', async (req, res) => {
+
+    const { userId, roomId, price, start_date, end_date, total, created_at, updated_at } = req.body
+    try {
+        const doExists = await prisma.reservations.findFirst({ where: { userId: userId, roomId: roomId } })
+        if (doExists) throw new Error
+        else {
+            const newReservation = await prisma.reservations.create({ data: { userId: userId, roomId: roomId, price: price, start_date: start_date, end_date: end_date, total: total, created_at: created_at, updated_at: updated_at } })
+            res.send(newReservation)
+        }
+
+    } catch (err) {
+        // @ts-ignore
+        res.status(400).send(err.message)
+    }
+})
 
 app.listen(4000, () => {
     console.log('Server running: http://localhost:4000')

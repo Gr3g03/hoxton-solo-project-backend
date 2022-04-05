@@ -35,15 +35,15 @@ model Rooms {
   id              Int            @id @default(autoincrement())
   home_type       String
   room_type       String
-  total_occupancy Int
-  total_bedrooms  Int
-  total_bathrooms Int
+  total_occupancy String
+  total_bedrooms  String
+  total_bathrooms String
   address         String
-  has_tv          Int
-  has_kitchen     Int
-  has_air_con     Int
-  has_heating     Int
-  has_Internet    Int
+  has_tv          String
+  has_kitchen     String
+  has_air_con     String
+  has_heating     String
+  has_Internet    String
   price           Int
   photo           String
   published_at    String

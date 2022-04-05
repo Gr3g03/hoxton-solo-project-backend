@@ -116,8 +116,8 @@ app.post('/reservations', async (req, res) => {
         const doExists = await prisma.reservations.findFirst({ where: { userId: userId, roomId: roomId } })
         if (doExists) throw new Error
         else {
-            const newReservation = await prisma.reservations.create({ data: { userId: userId, roomId: roomId, price: price, start_date: start_date, end_date: end_date, total: total, created_at: created_at, updated_at: updated_at } })
-            res.send(newReservation)
+            const newRoom = await prisma.reservations.create({ data: { userId: userId, roomId: roomId, price: price, start_date: start_date, end_date: end_date, total: total, created_at: created_at, updated_at: updated_at } })
+            res.send(newRoom)
         }
 
     } catch (err) {
@@ -125,6 +125,25 @@ app.post('/reservations', async (req, res) => {
         res.status(400).send(err.message)
     }
 })
+
+app.post('/rooms', async (req, res) => {
+    const { home_type, room_type, total_occupancy, total_bedrooms, total_bathrooms, address, has_tv, has_kitchen, has_air_con, has_heating, has_Internet, price, photo, published_at, created_at, stars, userId, ownerId } = req.body
+
+    try {
+        const doExists = await prisma.reservations.findFirst({ where: { userId: userId } })
+        if (doExists) throw new Error
+        else {
+            // @ts-ignore
+            const newRoom = await prisma.reservations.create({ data: { home_type: home_type, room_type: room_type, total_occupancy: total_occupancy, total_bedrooms: total_bedrooms, total_bathrooms: total_bathrooms, address: address, has_tv: has_tv, has_kitchen: has_kitchen, has_air_con: has_air_con, has_heating: has_heating, has_Internet: has_Internet, price: price, photo: photo, published_at: published_at, created_at: created_at, stars: stars, userId: userId, ownerId: ownerId } })
+            res.send(newRoom)
+        }
+
+    } catch (err) {
+        // @ts-ignore
+        res.status(400).send(err.message)
+    }
+})
+
 
 app.listen(4000, () => {
     console.log('Server running: http://localhost:4000')

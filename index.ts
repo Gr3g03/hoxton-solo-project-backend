@@ -127,11 +127,9 @@ app.post('/reservations', async (req, res) => {
 })
 
 app.post('/rooms', async (req, res) => {
-    // const token = req.headers.authorization || ''
     const { home_type, room_type, total_occupancy, total_bedrooms, total_bathrooms, address, has_tv, has_kitchen, has_air_con, has_heating, has_Internet, price, photo, published_at, created_at, stars, userId, ownerId } = req.body
 
     try {
-        // const user = await getUserFromToken(token)
         const room = await prisma.rooms.create({
             // @ts-ignore
             data: { home_type: home_type, room_type: room_type, total_occupancy: total_occupancy, total_bedrooms: total_bedrooms, total_bathrooms: total_bathrooms, address: address, has_tv: has_tv, has_kitchen: has_kitchen, has_air_con: has_air_con, has_heating: has_heating, has_Internet: has_Internet, price: price, photo: photo, published_at: published_at, created_at: created_at, stars: stars, userId: userId, ownerId: ownerId }
